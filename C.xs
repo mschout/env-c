@@ -3,8 +3,7 @@
 #include "ppport.h"
 #include "XSUB.h"
 
-#include <unistd.h>
-
+#include <stdlib.h> /* setenv/getenv */
 
 MODULE = Env::C		PACKAGE = Env::C  PREFIX = env_c_
 

@@ -7,7 +7,7 @@ use strict;
 
 require DynaLoader;
 @Env::C::ISA = qw(DynaLoader);
-$Env::C::VERSION = '0.02';
+$Env::C::VERSION = '0.03';
 
 bootstrap Env::C $Env::C::VERSION;
 

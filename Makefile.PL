@@ -1,5 +1,11 @@
 use ExtUtils::MakeMaker;
 
+# patches are welcome
+my %dunno = map {$_ => 1} qw(solaris MSWin32);
+
+die "Sorry, dunno how to build for $^O\npatches are welcome\n"
+    if $dunno{$^O};
+
 WriteMakefile(
     'NAME'		=> 'Env::C',
     'VERSION_FROM'	=> 'C.pm',
