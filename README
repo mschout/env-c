@@ -1,0 +1,67 @@
+NAME
+    Env::C - Get/Set/Unset Environment Variables on the C level
+
+SYNOPSIS
+      use Env::C;
+  
+      my $key = "USER";
+      $val = Env::C::getenv($key) || '';
+
+      Env::C::setenv($key, "foobar", [$override]);
+      $new_val = Env::C::getenv($key) || '';
+
+      Env::C::unsetenv($key);
+
+      my $ar_env = Env::C::getallenv();
+      print join "\n", @$ar_env;
+
+DESCRIPTION
+    This module provides a Perl API for getenv(3), setenv(3) and
+    unsetenv(3). It also can return all the "environ" variables.
+
+    Sometimes Perl invokes modules with underlaying C APIs which rely on
+    certain environment variables to be set, if these variables are set in
+    Perl and the glue code doesn't worry to set them on the C level, these
+    variables might not be seen by the C level. This module shows what
+    really the C level sees.
+
+  FUNCTIONS
+
+    * getenv()
+          $val = Env::C::getenv($key);
+
+        Returns the value of the environment variable matching the key or
+        "undef".
+
+    * setenv()
+          Env::C::setenv($key, $value, [$override]);
+
+        The setenv() function adds the variable "$key" to the environment
+        with the value "$value", if "$key" does not already exist. If "$key"
+        does exist in the environment, then its value is changed to "$value"
+        if "$overwrite" is non-zero; if "$overwrite" is zero or is not
+        passed, then the value of "$key" is not changed.
+
+    * unsetenv()
+          Env::C::unsetenv($key);
+
+        The unsetenv() function deletes the variable "$key" from the
+        environment.
+
+    * getallenv()
+          my $ar_env = Env::C::getallenv();
+          print join "\n", @$ar_env;
+
+        The getallenv() function returns an array reference which includes
+        all the all the environment variables.
+
+  EXPORT
+
+    None.
+
+AUTHOR
+    Stas Bekman <stas@stason.org>
+
+SEE ALSO
+    the perl manpage.
+
