@@ -1,7 +1,7 @@
 use ExtUtils::MakeMaker;
 
 # patches are welcome
-my %dunno = map {$_ => 1} qw(solaris MSWin32);
+my %dunno = map {$_ => 1} qw(solaris);
 
 die "Sorry, dunno how to build for $^O\npatches are welcome\n"
     if $dunno{$^O};

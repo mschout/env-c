@@ -6,12 +6,12 @@ SYNOPSIS
   
       my $key = "USER";
       $val = Env::C::getenv($key) || '';
-
+  
       Env::C::setenv($key, "foobar", [$override]);
       $new_val = Env::C::getenv($key) || '';
-
+  
       Env::C::unsetenv($key);
-
+  
       my $ar_env = Env::C::getallenv();
       print join "\n", @$ar_env;
 
@@ -78,6 +78,10 @@ Thread-safety and Thread-locality
 
 AUTHOR
     Stas Bekman <stas@stason.org>
+
+COPYRIGHT
+    This is a free software; you can redistribute it and/or modify it under
+    the terms of the Artistic License.
 
 SEE ALSO
     perl.

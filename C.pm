@@ -7,7 +7,7 @@ use strict;
 
 require DynaLoader;
 @Env::C::ISA = qw(DynaLoader);
-$Env::C::VERSION = '0.03';
+$Env::C::VERSION = '0.04';
 
 bootstrap Env::C $Env::C::VERSION;
 
@@ -18,20 +18,24 @@ __END__
 
 Env::C - Get/Set/Unset Environment Variables on the C level
 
+
+
 =head1 SYNOPSIS
 
   use Env::C;
   
   my $key = "USER";
   $val = Env::C::getenv($key) || '';
-
+  
   Env::C::setenv($key, "foobar", [$override]);
   $new_val = Env::C::getenv($key) || '';
-
+  
   Env::C::unsetenv($key);
-
+  
   my $ar_env = Env::C::getallenv();
   print join "\n", @$ar_env;
+
+
 
 =head1 DESCRIPTION
 
@@ -41,8 +45,11 @@ unsetenv(3). It also can return all the C<environ> variables.
 Sometimes Perl invokes modules with underlaying C APIs which rely on
 certain environment variables to be set, if these variables are set in
 Perl and the glue code doesn't worry to set them on the C level, these
-variables might not be seen by the C level. This module shows what really
-the C level sees.
+variables might not be seen by the C level. This module shows what
+really the C level sees.
+
+
+
 
 =head2 FUNCTIONS
 
@@ -82,9 +89,15 @@ the all the environment variables.
 
 =back
 
+
+
+
 =head2 EXPORT
 
 None.
+
+
+
 
 =head1 Thread-safety and Thread-locality
 
@@ -106,9 +119,21 @@ If you need to modify the C level of C<%ENV> for all threads to see,
 do that before threads are started. (e.g. for mod_perl 2.0, at the
 server startup).
 
+
+
+
 =head1 AUTHOR
 
 Stas Bekman E<lt>stas@stason.orgE<gt>
+
+
+
+=head1 COPYRIGHT
+
+This is a free software; you can redistribute it and/or modify it
+under the terms of the Artistic License.
+
+
 
 =head1 SEE ALSO
 

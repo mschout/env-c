@@ -1,5 +1,11 @@
 Revision history for Perl extension Env::C.
 
+0.04 Wed Jun 23 17:52:38 IDT 2004
+
+- add the missing license info
+
+- add MSWin32 support [Larry Pells <lpells@spillman.com>]
+
 0.03 Sun Mar  9 10:20:56 EST 2003
 
 - refuse to build for solaris and MSWin32, since it won't work
