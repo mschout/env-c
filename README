@@ -26,7 +26,6 @@ DESCRIPTION
     really the C level sees.
 
   FUNCTIONS
-
     * getenv()
           $val = Env::C::getenv($key);
 
@@ -36,16 +35,16 @@ DESCRIPTION
     * setenv()
           Env::C::setenv($key, $value, [$override]);
 
-        The setenv() function adds the variable "$key" to the environment
-        with the value "$value", if "$key" does not already exist. If "$key"
-        does exist in the environment, then its value is changed to "$value"
-        if "$overwrite" is non-zero; if "$overwrite" is zero or is not
-        passed, then the value of "$key" is not changed.
+        The setenv() function adds the variable $key to the environment with
+        the value $value, if $key does not already exist. If $key does exist
+        in the environment, then its value is changed to $value if $override
+        is non-zero; if $override is zero or is not passed, then the value
+        of $key is not changed.
 
     * unsetenv()
           Env::C::unsetenv($key);
 
-        The unsetenv() function deletes the variable "$key" from the
+        The unsetenv() function deletes the variable $key from the
         environment.
 
     * getallenv()
@@ -56,12 +55,30 @@ DESCRIPTION
         all the all the environment variables.
 
   EXPORT
-
     None.
+
+Thread-safety and Thread-locality
+    This module should not be used in the threaded enviroment.
+
+    Thread-locality: the OS, which maintains the struct "environ", shares it
+    between all threads in the process. So if you modify it in one thread,
+    all other threads will see the new value. Something that will most
+    likely break the code.
+
+    This module is not thread-safe, since two threads may attempt to
+    modify/read the struct "environ" at the same time. I could add locking
+    if in threaded-environment. However since the lock can't be seen by
+    other applications, they can still bypass it causing race condition. But
+    since thread-locality is not maintained, making this module thread-safe
+    is useless.
+
+    If you need to modify the C level of %ENV for all threads to see, do
+    that before threads are started. (e.g. for mod_perl 2.0, at the server
+    startup).
 
 AUTHOR
     Stas Bekman <stas@stason.org>
 
 SEE ALSO
-    the perl manpage.
+    perl.
 

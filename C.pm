@@ -7,7 +7,7 @@ use strict;
 
 require DynaLoader;
 @Env::C::ISA = qw(DynaLoader);
-$Env::C::VERSION = '0.01';
+$Env::C::VERSION = '0.02';
 
 bootstrap Env::C $Env::C::VERSION;
 
@@ -62,7 +62,7 @@ C<undef>.
 The setenv() function adds the variable C<$key> to the environment
 with the value C<$value>, if C<$key> does not already exist.  If
 C<$key> does exist in the environment, then its value is changed to
-C<$value> if C<$overwrite> is non-zero; if C<$overwrite> is zero or is
+C<$value> if C<$override> is non-zero; if C<$override> is zero or is
 not passed, then the value of C<$key> is not changed.
 
 =item * unsetenv()
@@ -85,6 +85,26 @@ the all the environment variables.
 =head2 EXPORT
 
 None.
+
+=head1 Thread-safety and Thread-locality
+
+This module should not be used in the threaded enviroment.
+
+Thread-locality: the OS, which maintains the struct C<environ>, shares
+it between all threads in the process. So if you modify it in one
+thread, all other threads will see the new value. Something that will
+most likely break the code.
+
+This module is not thread-safe, since two threads may attempt to
+modify/read the struct C<environ> at the same time. I could add
+locking if in threaded-environment. However since the lock can't be
+seen by other applications, they can still bypass it causing race
+condition. But since thread-locality is not maintained, making this
+module thread-safe is useless.
+
+If you need to modify the C level of C<%ENV> for all threads to see,
+do that before threads are started. (e.g. for mod_perl 2.0, at the
+server startup).
 
 =head1 AUTHOR
 
