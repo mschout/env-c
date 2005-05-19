@@ -7,7 +7,7 @@ use strict;
 
 require DynaLoader;
 @Env::C::ISA = qw(DynaLoader);
-$Env::C::VERSION = '0.04';
+$Env::C::VERSION = '0.05';
 
 bootstrap Env::C $Env::C::VERSION;
 
@@ -85,7 +85,7 @@ environment.
   print join "\n", @$ar_env;
 
 The getallenv() function returns an array reference which includes all
-the all the environment variables.
+the environment variables.
 
 =back
 

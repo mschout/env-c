@@ -52,7 +52,7 @@ DESCRIPTION
           print join "\n", @$ar_env;
 
         The getallenv() function returns an array reference which includes
-        all the all the environment variables.
+        all the environment variables.
 
   EXPORT
     None.

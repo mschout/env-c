@@ -1,5 +1,9 @@
 Revision history for Perl extension Env::C.
 
+0.05 Thu May 19 15:05:37 EDT 2005
+
+- add Solaris support [Larry Pells <lpells@spillman.com>]
+
 0.04 Wed Jun 23 17:52:38 IDT 2004
 
 - add the missing license info
