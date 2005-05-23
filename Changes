@@ -1,5 +1,9 @@
 Revision history for Perl extension Env::C.
 
+0.06 Mon May 23 18:53:52 EDT 2005
+
+- As AIX has no unsetenv, reuse the code for Solaris to implement it [Larry Pells <lpells@spillman.com>]
+
 0.05 Thu May 19 15:05:37 EDT 2005
 
 - add Solaris support [Larry Pells <lpells@spillman.com>]

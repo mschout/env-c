@@ -67,7 +67,7 @@ env_c_unsetenv(key)
 #ifdef WIN32
     char *buff;
 #endif
-#ifdef sun
+#if defined( sun ) || defined( _AIX )
     int key_len;
     extern char **environ;
     char **envp;
@@ -80,7 +80,7 @@ env_c_unsetenv(key)
     _putenv(buff);
     free(buff);
 #else
-#ifndef sun
+#if !defined( sun ) && !defined( _AIX )
     unsetenv(key);
 #else
     key_len = strlen(key);
