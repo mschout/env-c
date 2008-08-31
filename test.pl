@@ -1,27 +1,25 @@
 use strict;
 #use warnings;
 
-use Test;
-
-BEGIN { plan tests => 6 };
+use Test::More tests => 5;
 use Env::C;
-ok 1 ;
 
 # getenv
 my $key = "USER";
 my $val_orig = Env::C::getenv($key) || '';
-print "# [$key] '$val_orig'\n";
-ok $val_orig eq $ENV{$key} ? 1 : 0;
+is $val_orig, $ENV{$key}, "getenv matches perl ENV for $key";
 
 # unsetenv
+diag "unsetting an env";
 Env::C::unsetenv($key);
-my $val = Env::C::getenv($key) || '';
-print "# [$key] expecting '', got '$val'\n";
-ok $val eq '' ? 1 : 0;
+diag "getting it";
+my $val = Env::C::getenv($key);
+is $val, undef, "$key is no longer set in C env";
 
 # setenv
 my $val_new = "foobar";
 Env::C::setenv($key, $val_new);
+diag "called setenv";
 $val = Env::C::getenv($key) || '';
 print "# [$key] expecting '$val_new', got '$val'\n";
 ok $val eq $val_new ? 1 : 0;

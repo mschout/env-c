@@ -1,5 +1,20 @@
 Revision history for Perl extension Env::C.
 
+0.07 Sun Aug 31 15:14:09 PDT 2008
+
+- Env-C assumes that there are no native functions for manipulating the
+environment on Solaris 10, and this results in a segmentation fault when
+running the test script.
+
+The attached patch detects solaris versions that have these functions in
+libc by doing the same thing that the stdlib.h header does to reveal the
+prototype.  Ideally the Makefile.PL would detect the functions using a
+compiler check, but this seems like the simplest approach for the moment.
+[Patch by wez@messagesystems.com]
+
+- include the latest ppport.h
+
+
 0.06 Mon May 23 18:53:52 EDT 2005
 
 - As AIX has no unsetenv, reuse the code for Solaris to implement it [Larry Pells <lpells@spillman.com>]

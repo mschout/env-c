@@ -3,16 +3,16 @@ NAME
 
 SYNOPSIS
       use Env::C;
-  
-      my $key = "USER";
+      
+  my $key = "USER";
       $val = Env::C::getenv($key) || '';
-  
-      Env::C::setenv($key, "foobar", [$override]);
+      
+  Env::C::setenv($key, "foobar", [$override]);
       $new_val = Env::C::getenv($key) || '';
-  
-      Env::C::unsetenv($key);
-  
-      my $ar_env = Env::C::getallenv();
+      
+  Env::C::unsetenv($key);
+      
+  my $ar_env = Env::C::getallenv();
       print join "\n", @$ar_env;
 
 DESCRIPTION
@@ -26,13 +26,15 @@ DESCRIPTION
     really the C level sees.
 
   FUNCTIONS
-    * getenv()
+    *   getenv()
+
           $val = Env::C::getenv($key);
 
         Returns the value of the environment variable matching the key or
         "undef".
 
-    * setenv()
+    *   setenv()
+
           Env::C::setenv($key, $value, [$override]);
 
         The setenv() function adds the variable $key to the environment with
@@ -41,13 +43,15 @@ DESCRIPTION
         is non-zero; if $override is zero or is not passed, then the value
         of $key is not changed.
 
-    * unsetenv()
+    *   unsetenv()
+
           Env::C::unsetenv($key);
 
         The unsetenv() function deletes the variable $key from the
         environment.
 
-    * getallenv()
+    *   getallenv()
+
           my $ar_env = Env::C::getallenv();
           print join "\n", @$ar_env;
 

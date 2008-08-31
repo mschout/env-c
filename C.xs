@@ -6,6 +6,27 @@
 #include <stdlib.h> /* setenv/getenv */
 #include <stdio.h>  /* sprintf */
 
+/* configure-less detection of unsetenv for solaris */
+#if defined(sun)
+# if defined(__EXTENSIONS__) ||\
+    (!defined(_STRICT_STDC) && !defined(__XOPEN_OR_POSIX)) || \
+	    defined(_XPG6)
+#  define HAVE_UNSETENV 1
+#  define HAVE_SETENV 1
+# endif
+#endif
+
+#ifndef HAVE_UNSETENV
+# if !defined(WIN32) && !defined(sun) && !defined(_AIX)
+#  define HAVE_UNSETENV 1
+# endif
+#endif
+#ifndef HAVE_SETENV
+# if !defined(WIN32) && !defined(sun)
+#  define HAVE_SETENV 1
+# endif
+#endif
+
 MODULE = Env::C        PACKAGE = Env::C  PREFIX = env_c_
 
 char *
@@ -27,7 +48,7 @@ env_c_setenv(key, val, override=1)
     int override
 
     CODE:
-#if defined(WIN32) || defined(sun)
+#if !HAVE_SETENV
     if (override || getenv(key) == NULL) {
         char *old_env = getenv( key ); 
         char *buff = malloc(strlen(key) + strlen(val) + 2);
@@ -80,7 +101,7 @@ env_c_unsetenv(key)
     _putenv(buff);
     free(buff);
 #else
-#if !defined( sun ) && !defined( _AIX )
+#if HAVE_UNSETENV
     unsetenv(key);
 #else
     key_len = strlen(key);
@@ -120,10 +141,3 @@ env_c_getallenv()
     OUTPUT:
     RETVAL
 
-
-
-
-    
-
-
-    
