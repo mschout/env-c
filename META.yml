@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Env-C
-version:             0.07
+version:             0.08
 abstract:            Get/Set/Unset Environment Variables on the C level
 license:             ~
 author:              

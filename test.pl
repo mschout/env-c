@@ -6,7 +6,7 @@ use Env::C;
 
 # getenv
 my $key = "USER";
-my $val_orig = Env::C::getenv($key) || '';
+my $val_orig = Env::C::getenv($key);
 is $val_orig, $ENV{$key}, "getenv matches perl ENV for $key";
 
 # unsetenv

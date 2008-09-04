@@ -1,5 +1,16 @@
 Revision history for Perl extension Env::C.
 
+0.08 Thu Sep  4 08:50:40 PDT 2008
+
+- fix the first test, where getenv returns undef on windows, rather
+than ''.
+
+- undo part of the patch for windows in wez@messagesystems.com's patch
+
+- another patch from wez@messagesystems.com, to solve the "panic: free
+from wrong pool during global destruction" problem he detected on his
+x64 linux build. using PL_use_safe_putenv.
+
 0.07 Sun Aug 31 15:14:09 PDT 2008
 
 - Env-C assumes that there are no native functions for manipulating the

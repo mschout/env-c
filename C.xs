@@ -17,7 +17,7 @@
 #endif
 
 #ifndef HAVE_UNSETENV
-# if !defined(WIN32) && !defined(sun) && !defined(_AIX)
+# if !defined(sun) && !defined(_AIX)
 #  define HAVE_UNSETENV 1
 # endif
 #endif
@@ -45,7 +45,8 @@ int
 env_c_setenv(key, val, override=1)
     char *key
     char *val
-    int override
+    int override;
+
 
     CODE:
 #if !HAVE_SETENV
@@ -72,6 +73,7 @@ env_c_setenv(key, val, override=1)
         RETVAL = -1;
     }
 #else
+    PL_use_safe_putenv = 1; /* otherwise we get wrong pool error on x64 */
     RETVAL = setenv(key, val, override);
 #endif
 
