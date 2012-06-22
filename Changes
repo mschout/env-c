@@ -4,6 +4,7 @@ Revision history for Perl extension Env::C.
 
 - new maintainer: Michael Schout <mschout@cpan.org>
 - use Dist::Zilla for distribution management
+- fix: getallenv() segmentation fault under OS X 10.7
 
 0.08 Thu Sep  4 08:50:40 PDT 2008
 

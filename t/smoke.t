@@ -1,7 +1,7 @@
 use strict;
 #use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 7;
 use Env::C;
 
 # getenv
@@ -31,3 +31,8 @@ my $env = Env::C::getallenv();
 print "# ", scalar(@$env), " env entries\n";
 #print join "\n", @$env;
 ok @$env;
+
+cmp_ok scalar @$env, '==', scalar keys %ENV;
+
+my @perl_env = map { "$_=$ENV{$_}" } keys %ENV;
+is_deeply [sort @$env], [sort @perl_env];

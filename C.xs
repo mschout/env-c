@@ -134,11 +134,11 @@ env_c_getallenv()
 #endif
 
     CODE:
-    RETVAL = Perl_newAV(aTHX);
+    RETVAL = newAV();
 
-    do {
+    while ((char*)environ[i] != '\0') {
         Perl_av_push(aTHX_ RETVAL, newSVpv((char*)environ[i++], 0));
-    } while ((char*)environ[i] != '\0');
+    }
 
     OUTPUT:
     RETVAL
