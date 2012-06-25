@@ -1,0 +1,14 @@
+C.xs
+Changes
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+SIGNATURE
+dist.ini
+lib/Env/C.pm
+ppport.h
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+t/smoke.t

@@ -1,0 +1,23 @@
+---
+abstract: 'Get/Set/Unset Environment Variables on the C level'
+author:
+  - 'Michael Schout <mschout@cpan.org>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.200006, CPAN::Meta::Converter version 2.110930'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Env-C
+requires:
+  DynaLoader: 0
+  perl: 5.005
+resources:
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Env-C
+  homepage: http://search.cpan.org/dist/Env-C/
+  repository: git://github.com/mschout/env-c.git
+version: 0.09
