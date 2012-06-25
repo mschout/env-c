@@ -1,5 +1,10 @@
 Revision history for Perl extension Env::C.
 
+{{NEXT}}
+
+- new maintainer: Michael Schout <mschout@cpan.org>
+- use Dist::Zilla for distribution management
+
 0.08 Thu Sep  4 08:50:40 PDT 2008
 
 - fix the first test, where getenv returns undef on windows, rather
