@@ -1,6 +1,6 @@
 Revision history for Perl extension Env::C.
 
-{{NEXT}}
+{{$NEXT}}
 
 - new maintainer: Michael Schout <mschout@cpan.org>
 - use Dist::Zilla for distribution management
