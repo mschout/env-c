@@ -73,7 +73,6 @@ env_c_setenv(key, val, override=1)
         RETVAL = -1;
     }
 #else
-    PL_use_safe_putenv = 1; /* otherwise we get wrong pool error on x64 */
     RETVAL = setenv(key, val, override);
 #endif
 
