@@ -1,6 +1,6 @@
 package Env::C;
-BEGIN {
-  $Env::C::VERSION = '0.09';
+{
+  $Env::C::VERSION = '0.10';
 }
 
 # ABSTRACT: Get/Set/Unset Environment Variables on the C level
@@ -17,6 +17,7 @@ bootstrap Env::C $Env::C::VERSION;
 
 1;
 
+__END__
 
 =pod
 
@@ -26,7 +27,7 @@ Env::C - Get/Set/Unset Environment Variables on the C level
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -137,7 +138,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

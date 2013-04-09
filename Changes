@@ -1,6 +1,9 @@
 Revision history for Perl extension Env::C.
 
-NEXT
+0.10  2013-04-09
+- fix memory leak due to PL_use_safe_putenv = 1 [#49872]
+
+0.09  2012-06-25
 
 - new maintainer: Michael Schout <mschout@cpan.org>
 - use Dist::Zilla for distribution management

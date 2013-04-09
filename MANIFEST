@@ -2,13 +2,15 @@ C.xs
 Changes
 LICENSE
 MANIFEST
+MANIFEST.SKIP
 META.yml
 Makefile.PL
 README
 SIGNATURE
-dist.ini
 lib/Env/C.pm
 ppport.h
+t/leak.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
+t/signature.t
 t/smoke.t

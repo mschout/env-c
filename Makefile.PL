@@ -2,34 +2,51 @@
 use strict;
 use warnings;
 
-BEGIN { require 5.005; }
+use 5.005;
 
 use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Get/Set/Unset Environment Variables on the C level',
-  'AUTHOR' => 'Michael Schout <mschout@cpan.org>',
-  'BUILD_REQUIRES' => {
-    'Test::More' => '0'
+  "ABSTRACT" => "Get/Set/Unset Environment Variables on the C level",
+  "AUTHOR" => "Michael Schout <mschout\@cpan.org>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "DISTNAME" => "Env-C",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Env::C",
+  "PREREQ_PM" => {
+    "DynaLoader" => 0,
+    "strict" => 0
   },
-  'DISTNAME' => 'Env-C',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'Env::C',
-  'PREREQ_PM' => {
-    'DynaLoader' => '0'
+  "TEST_REQUIRES" => {
+    "Module::Signature" => 0,
+    "Socket" => 0,
+    "Test::More" => 0
   },
-  'VERSION' => '0.09',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.10",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
+  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
   my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
