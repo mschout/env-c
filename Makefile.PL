@@ -24,7 +24,7 @@ my %WriteMakefileArgs = (
     "strict" => 0
   },
   "TEST_REQUIRES" => {
-    "Module::Signature" => 0,
+    # "Module::Signature" => 0,
     "Socket" => 0,
     "Test::More" => 0
   },
