@@ -7,6 +7,8 @@ Revision history for Perl extension Env::C.
   SIGV. [#49872]
 - MANIFEST.SKIP: add MYMETA.json, MYMETA.yml
 - update to latest ppport.h
+- prereqs: require Test::More v0.88 or later, exclude optional
+  Module::Signature
 
 0.10  2013-04-09
 - fix memory leak due to PL_use_safe_putenv = 1 [#49872]
