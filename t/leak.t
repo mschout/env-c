@@ -7,37 +7,45 @@ use strict;
 use Test::More;
 use Env::C;
 
-my $Statm = "/proc/$$/statm";
+if (is_known_leaky_platform()) {
+    plan skip_all => "setenv is known to leak on this platform";
+}
 
-plan skip_all => "this test requires $Statm" unless -f $Statm;
+unless (eval { require Proc::ProcessTable }) {
+    plan skip_all => "this test requires Proc::ProcessTable";
+}
 
 Env::C::setenv(TZ => 'GMT');
 
-my $start_size = proc_size();
+my $start_size = memusage();
 
 for (1..300000) {
     $ENV{TZ} = 'GMT';
     $ENV{TZ} = '';
 }
 
-cmp_ok $start_size, '==', proc_size(), 'setenv does not leak';
+my $end_size = memusage();
+
+cmp_ok $end_size, '==', $start_size, 'setenv does not leak';
 
 done_testing;
 
-sub proc_size {
-    local $/ = undef;
-
-    my ($size) = split /\s+/, slurp($Statm);
-
-    return $size;
+sub is_known_leaky_platform {
+    return 1 if $^O eq 'freebsd' and $] <= 5.019006;
+    return 0;
 }
 
-sub slurp {
-    my $file = shift;
+sub memusage {
+    my $pid = $$;
 
-    open my $fh, '<', $file or die "failed to open $file: $!";
+    my $proc = Proc::ProcessTable->new;
 
-    my $content = <$fh>;
+    my %fields = map { $_ => 1 } $proc->fields;
+    return 0 unless exists $fields{'pid'};
 
-    return $content;
+    for my $ps (@{$proc->table}) {
+        if ($ps->pid eq $pid) {
+            return $ps->size;
+        };
+    };
 }
