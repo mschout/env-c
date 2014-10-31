@@ -11,3 +11,5 @@ C.(c|o|bs)
 .git
 .gitignore
 dist.ini
+MYMETA.json
+MYMETA.yml
