@@ -6,6 +6,7 @@ Revision history for Perl extension Env::C.
   This causes setenv to leak memory, but seems to be the only way to avoid
   SIGV. [#49872]
 - MANIFEST.SKIP: add MYMETA.json, MYMETA.yml
+- update to latest ppport.h
 
 0.10  2013-04-09
 - fix memory leak due to PL_use_safe_putenv = 1 [#49872]
