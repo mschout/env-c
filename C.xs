@@ -27,6 +27,17 @@
 # endif
 #endif
 
+/* we need to use safe putenv on some platforms to avoid possible SIGV at exit.
+ * this may cause setenv to leak memory, but is the only way to avoid the SIGV
+ * because the root problem seems to be in perl itself, and was not fixed until 5.19.6.
+ * see: https://rt.cpan.org/Ticket/Display.html?id=49872
+ */
+#if PERL_BCDVERSION < 0x5019006
+# if defined(__FreeBSD__)
+#  define USE_SAFE_PUTENV 1
+# endif
+#endif
+
 MODULE = Env::C        PACKAGE = Env::C  PREFIX = env_c_
 
 char *
@@ -73,6 +84,9 @@ env_c_setenv(key, val, override=1)
         RETVAL = -1;
     }
 #else
+# ifdef USE_SAFE_PUTENV
+    PL_use_safe_putenv = 1;
+# endif
     RETVAL = setenv(key, val, override);
 #endif
 
