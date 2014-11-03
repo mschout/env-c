@@ -1,3 +1,10 @@
 .build
 Env-C-*
 *.bak
+C.c
+C.o
+C.bs
+MYMETA.*
+blib/
+pm_to_blib
+Makefile
