@@ -1,5 +1,11 @@
 Revision history for Perl extension Env::C.
 
+0.12  2014-11-03
+- Narrow down "panic: free from wrong pool" error to perl with both threads,
+  and PERL_TRACK_MEMPOOL (enabled implicitly with DEBUGGING).  work around
+  by using PL_use_safe_putenv only if building under threaded perl with
+  PERL_TRACK_MEMPOOL.  [#99962]
+
 0.11  2014-10-31
 - FreeBSD: fix SIGV at exit for perl < 5.19.6 by using PL_use_safe_putenv.
   This causes setenv to leak memory, but seems to be the only way to avoid

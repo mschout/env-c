@@ -1,5 +1,5 @@
 package Env::C;
-$Env::C::VERSION = '0.11';
+$Env::C::VERSION = '0.12';
 # ABSTRACT: Get/Set/Unset Environment Variables on the C level
 
 require 5.005;
@@ -24,7 +24,7 @@ Env::C - Get/Set/Unset Environment Variables on the C level
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -79,6 +79,8 @@ environment.
 
 The C<getallenv()> function returns an array reference which includes all
 the environment variables.
+
+=for Pod::Coverage using_safe_putenv
 
 =head2 EXPORT
 
