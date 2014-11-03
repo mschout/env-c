@@ -7,13 +7,15 @@ use strict;
 use Test::More;
 use Env::C;
 
-if (is_known_leaky_platform()) {
-    plan skip_all => "setenv() is known to leak on this platform";
+if (Env::C::using_safe_putenv()) {
+    plan skip_all => "perl leaks with PERL_USE_SAFE_PUTENV";
 }
 
 unless (-f '/proc/self/statm') {
     plan skip_all => 'this test requires /proc/self/statm';
 }
+
+plan tests => 1;
 
 Env::C::setenv(TZ => 'GMT');
 
@@ -27,16 +29,6 @@ for (1..300000) {
 my $end_size = memusage();
 
 cmp_ok $end_size, '==', $start_size, 'setenv does not leak';
-
-done_testing;
-
-sub is_known_leaky_platform {
-    # freebsd < 5.19.6 uses PL_use_safe_putenv, which leaks, but is necessary
-    # to avoid SIGV
-    return 1 if $^O eq 'freebsd' and $] < 5.019006;
-
-    return 0;
-}
 
 sub is_memusage_supported {
     return 1 if -f "/proc/self/statm";

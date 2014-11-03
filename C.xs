@@ -27,14 +27,24 @@
 # endif
 #endif
 
-/* we need to use safe putenv on some platforms to avoid possible SIGV at exit.
- * this may cause setenv to leak memory, but is the only way to avoid the SIGV
- * because the root problem seems to be in perl itself, and was not fixed until 5.19.6.
- * see: https://rt.cpan.org/Ticket/Display.html?id=49872
+/* in order to work around system and perl implementation bugs/leaks, we need
+ * to sometimes force PERL_USE_SAFE_PUTENV mode.
  */
-#if PERL_BCDVERSION < 0x5019006
-# if defined(__FreeBSD__)
+#ifndef PERL_USE_SAFE_PUTENV
+   /* Threaded perl with PERL_TRACK_MEMPOOL enabled causes
+    * "panic: free from wrong pool at exit"
+    * starting at 5.9.4 (confirmed through 5.20.1)
+    * see: https://rt.cpan.org/Ticket/Display.html?id=99962
+    */
+# if PERL_BCDVERSION >= 0x5009004 && defined(USE_ITHREADS) && defined(PERL_TRACK_MEMPOOL)
 #  define USE_SAFE_PUTENV 1
+# elif PERL_BCDVERSION >= 0x5008000 && PERL_BCDVERSION < 0x5019006
+   /* FreeBSD: SIGV at exit on perls prior to 5.19.6
+    * see: https://rt.cpan.org/Ticket/Display.html?id=49872
+    */
+#  if defined(__FreeBSD__)
+#   define USE_SAFE_PUTENV 1
+#  endif
 # endif
 #endif
 
@@ -156,3 +166,18 @@ env_c_getallenv()
     OUTPUT:
     RETVAL
 
+MODULE = Env::C        PACKAGE = Env::C  PREFIX = env_c_
+
+# this is for leak.t, which  needs to know if PERL_USE_SAFE_PUTENV is in
+# effect
+int
+env_c_using_safe_putenv()
+    CODE:
+#if defined(PERL_USE_SAFE_PUTENV) || defined(USE_SAFE_PUTENV)
+    RETVAL = 1;
+#else
+    RETVAL = 0;
+#endif
+
+    OUTPUT:
+    RETVAL

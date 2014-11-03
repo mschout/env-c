@@ -67,6 +67,8 @@ environment.
 The C<getallenv()> function returns an array reference which includes all
 the environment variables.
 
+=for Pod::Coverage using_safe_putenv
+
 =head2 EXPORT
 
 None.
