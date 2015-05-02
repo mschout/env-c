@@ -4,6 +4,12 @@ use strict;
 use Test::More tests => 7;
 use Env::C;
 
+# we assume $ENV{USER} exists, but that might not be the case (e.g.: in
+# docker).  If not present, just use root.
+unless (exists $ENV{USER}) {
+    $ENV{USER} = 'root';
+}
+
 # getenv
 my $key = "USER";
 my $val_orig = Env::C::getenv($key);

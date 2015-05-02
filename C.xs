@@ -1,7 +1,7 @@
 #include "EXTERN.h"
 #include "perl.h"
-#include "ppport.h"
 #include "XSUB.h"
+#include "ppport.h"
 
 #include <stdlib.h> /* setenv/getenv */
 #include <stdio.h>  /* sprintf */

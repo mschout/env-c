@@ -1,5 +1,5 @@
 package Env::C;
-$Env::C::VERSION = '0.12';
+$Env::C::VERSION = '0.13';
 # ABSTRACT: Get/Set/Unset Environment Variables on the C level
 
 require 5.005;
@@ -24,7 +24,7 @@ Env::C - Get/Set/Unset Environment Variables on the C level
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
