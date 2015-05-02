@@ -1,6 +1,8 @@
 Revision history for Perl extension Env::C.
 
 {{$NEXT}}
+- flip order of ppport.h and XSUB.h includes to fix duplicate declaration
+  warnings [Thanks Ian Bottomley]
 
 0.12  2014-11-03
 - Narrow down "panic: free from wrong pool" error to perl with both threads,
