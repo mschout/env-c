@@ -3,6 +3,8 @@ Revision history for Perl extension Env::C.
 {{$NEXT}}
 - flip order of ppport.h and XSUB.h includes to fix duplicate declaration
   warnings [Thanks Ian Bottomley]
+- Fix test failures in docker containers because smoke.t assumes $ENV{USER}
+  exists, but in docker this is not (necessarily) true.
 
 0.12  2014-11-03
 - Narrow down "panic: free from wrong pool" error to perl with both threads,
