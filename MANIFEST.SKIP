@@ -1,7 +1,7 @@
-Makefile
-Makefile\.old
-pm_to_blib
-blib
+^Makefile$
+^Makefile\.old$
+^pm_to_blib/
+^blib/
 # XS generated targets
 C.(c|o|bs)
 \.bak$
