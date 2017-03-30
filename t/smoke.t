@@ -24,14 +24,12 @@ is $val, undef, "$key is no longer set in C env";
 my $val_new = "foobar";
 Env::C::setenv($key, $val_new);
 $val = Env::C::getenv($key) || '';
-print "# [$key] expecting '$val_new', got '$val'\n";
-ok $val eq $val_new ? 1 : 0;
+is $val, $val_new, "reinstated $key in C env";
 
 # restore
 Env::C::setenv($key, $val_orig);
 $val = Env::C::getenv($key) || '';
-print "# [$key] expecting '$val_orig', got '$val'\n";
-ok $val eq $val_orig ? 1 : 0;
+is $val, $val_orig, "restored $key (using setenv with implicit override)";
 
 my $env = Env::C::getallenv();
 print "# ", scalar(@$env), " env entries\n";
