@@ -4,6 +4,7 @@ Revision history for Perl extension Env::C.
 - minor POD updates [Thanks José Joaquín Atria]
 - Add tests for override flag [Thanks José Joaquín Atria]
 - Use is() instead of ok() in tests [Thanks José Joaquín Atria]
+- apply skiplist to signature test
 
 0.13  2015-05-02
 - flip order of ppport.h and XSUB.h includes to fix duplicate declaration
