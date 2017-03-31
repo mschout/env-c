@@ -1,7 +1,7 @@
 use strict;
 #use warnings;
 
-use Test::More tests => 7;
+use Test::More tests => 9;
 use Env::C;
 
 # we assume $ENV{USER} exists, but that might not be the case (e.g.: in
@@ -24,14 +24,21 @@ is $val, undef, "$key is no longer set in C env";
 my $val_new = "foobar";
 Env::C::setenv($key, $val_new);
 $val = Env::C::getenv($key) || '';
-print "# [$key] expecting '$val_new', got '$val'\n";
-ok $val eq $val_new ? 1 : 0;
+is $val, $val_new, "reinstated $key in C env";
+
+my $overwrite = "barbaz";
+Env::C::setenv($key, $overwrite, 0);
+$val = Env::C::getenv($key) || '';
+is $val, $val_new, "do not overwrite $key with explicitly false override";
+
+Env::C::setenv($key, $val_new, 1);
+$val = Env::C::getenv($key) || '';
+is $val, $val_new, "overwrite $key with explicitly true override";
 
 # restore
 Env::C::setenv($key, $val_orig);
 $val = Env::C::getenv($key) || '';
-print "# [$key] expecting '$val_orig', got '$val'\n";
-ok $val eq $val_orig ? 1 : 0;
+is $val, $val_orig, "restored $key (using setenv with implicit override)";
 
 my $env = Env::C::getallenv();
 print "# ", scalar(@$env), " env entries\n";
