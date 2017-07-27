@@ -3,6 +3,8 @@ Revision history for Perl extension Env::C.
 {{$NEXT}}
 - make signture test an AUTHOR test
 - Fix some compiler warnings [Thanks Petr Písař]
+- Add setenv_multi() and unsetenv_multi() for bulk Env operations [Thanks
+  Sergey Panteleev]
 
 0.14  2017-03-31
 - minor POD updates [Thanks José Joaquín Atria]
