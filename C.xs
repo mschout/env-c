@@ -150,8 +150,6 @@ env_c_getallenv()
 
     PREINIT:
     int i = 0;
-    char *p;
-    AV *av = Nullav;
 #ifndef __BORLANDC__
     extern char **environ;
 #endif
@@ -159,7 +157,7 @@ env_c_getallenv()
     CODE:
     RETVAL = newAV();
 
-    while ((char*)environ[i] != '\0') {
+    while ((char*)environ[i] != NULL) {
         Perl_av_push(aTHX_ RETVAL, newSVpv((char*)environ[i++], 0));
     }
 
