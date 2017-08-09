@@ -2,6 +2,7 @@ Revision history for Perl extension Env::C.
 
 {{$NEXT}}
 - make signture test an AUTHOR test
+- Fix some compiler warnings [Thanks Petr Písař]
 
 0.14  2017-03-31
 - minor POD updates [Thanks José Joaquín Atria]
