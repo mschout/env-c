@@ -48,6 +48,34 @@
 # endif
 #endif
 
+/*
+ * Windows doesn't have setenv(), so we create a wrapper setenv() for windows
+ * that uses _putenv_s()
+ */
+#ifdef WIN32
+#  ifndef HAVE_SETENV
+#  define HAVE_SETENV 1
+int setenv(const char *name, const char *value, int overwrite)
+{
+    int errcode = 0;
+
+    if(!overwrite) {
+        size_t envsize = 0;
+
+        errcode = getenv_s(&envsize, NULL, 0, name);
+
+        if (errcode || envsize)
+            return errcode;
+    }
+
+    if (value != NULL)
+        return _putenv_s(name, value);
+    else
+        return _putenv_s(name, "");
+}
+#  endif
+#endif
+
 inline int __setenv(const char *key, const char *val, int override) {
     int RETVAL;
 #if !HAVE_SETENV
@@ -56,15 +84,10 @@ inline int __setenv(const char *key, const char *val, int override) {
         char *buff = malloc(strlen(key) + strlen(val) + 2);
         if (buff != NULL) {
             sprintf(buff, "%s=%s", key, val);
-#ifdef WIN32
-            RETVAL = _putenv(buff);
-            free(buff);
-#else
             RETVAL = putenv(buff);
             if (old_env == NULL) {
                 free(old_env);
             }
-#endif
         }
         else {
             RETVAL = -1;
@@ -83,10 +106,6 @@ inline int __setenv(const char *key, const char *val, int override) {
 }
 
 inline void __unsetenv(const char *key) {
-
-#ifdef WIN32
-    char *buff;
-#endif
 #if defined( sun ) || defined( _AIX )
     int key_len;
     extern char **environ;
@@ -94,10 +113,7 @@ inline void __unsetenv(const char *key) {
 #endif
 
 #ifdef WIN32
-    buff = malloc(strlen(key) + 2);
-    sprintf(buff, "%s=", key);
-    _putenv(buff);
-    free(buff);
+    _putenv_s(name, "");
 #else
 #if HAVE_UNSETENV
     unsetenv(key);

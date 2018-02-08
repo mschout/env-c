@@ -5,6 +5,8 @@ Revision history for Perl extension Env::C.
     - Add CAVEATS section to POD and explain how getenv() and %ENV differ on
       Windows.
     - skip t/leak.t on cygwin – setenv() in cygwin is known to leak memory
+    - Win32: use _putenv_s() to implement a setenv() wrapper
+    - Win32: use _putenv_s() to implement unsetenv()
 
 0.15  2017-08-11
     - make signture test an AUTHOR test
