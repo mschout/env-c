@@ -11,8 +11,14 @@ if (Env::C::using_safe_putenv()) {
     plan skip_all => "perl leaks with PERL_USE_SAFE_PUTENV";
 }
 
-unless (-f '/proc/self/statm') {
+unless (is_memusage_supported()) {
     plan skip_all => 'this test requires /proc/self/statm';
+}
+
+# setenv() in Cygwin might allocate memory but will not free it. Its known to
+# be leaky.
+if ($^O =~ /cygwin/) {
+    plan skip_all => 'setenv() is leaky on Cygwin';
 }
 
 plan tests => 1;
