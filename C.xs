@@ -17,7 +17,7 @@
 #endif
 
 #ifndef HAVE_UNSETENV
-# if !defined(sun) && !defined(_AIX)
+# if !defined(WIN32) && !defined(sun) && !defined(_AIX)
 #  define HAVE_UNSETENV 1
 # endif
 #endif
@@ -49,30 +49,20 @@
 #endif
 
 /*
- * Windows doesn't have setenv(), so we create a wrapper setenv() for windows
+ * Windows doesn't have getenv() or setenv(), so we create a wrapper setenv() for windows
  * that uses _putenv_s()
  */
 #ifdef WIN32
 #  ifndef HAVE_SETENV
-#  define HAVE_SETENV 1
-int setenv(const char *name, const char *value, int overwrite)
-{
-    int errcode = 0;
+#    define HAVE_SETENV 1
+#    define setenv(name, value, override) \
+      (((override) || !getenv(name)) ? _putenv_s(name, value) : 0)
+#  endif
 
-    if(!overwrite) {
-        size_t envsize = 0;
-
-        errcode = getenv_s(&envsize, NULL, 0, name);
-
-        if (errcode || envsize)
-            return errcode;
-    }
-
-    if (value != NULL)
-        return _putenv_s(name, value);
-    else
-        return _putenv_s(name, "");
-}
+#  ifndef HAVE_UNSETENV
+#    define HAVE_UNSETENV 1
+#    define unsetenv(name) \
+       (_putenv_s(name, ""))
 #  endif
 #endif
 
@@ -112,9 +102,6 @@ inline void __unsetenv(const char *key) {
     char **envp;
 #endif
 
-#ifdef WIN32
-    _putenv_s(name, "");
-#else
 #if HAVE_UNSETENV
     unsetenv(key);
 #else
@@ -129,7 +116,6 @@ inline void __unsetenv(const char *key) {
             break;
         }
     }
-#endif
 #endif
 }
 
