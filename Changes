@@ -1,6 +1,9 @@
 Revision history for Perl extension Env::C.
 
 {{$NEXT}}
+    - fix three different test failures on Windows (github #2)
+    - Add CAVEATS section to POD and explain how getenv() and %ENV differ on
+      Windows.
 
 0.15  2017-08-11
 - make signture test an AUTHOR test

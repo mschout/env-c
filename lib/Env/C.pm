@@ -90,9 +90,13 @@ the environment variables.
 
 None.
 
-=head1 Thread-safety and Thread-locality
+=head1 CAVEATS
 
-This module should not be used in a threaded enviroment.
+=over 4
+
+=item * Thread-safety and Thread-locality
+
+This module should not be used in a threaded environment.
 
 The OS, which maintains the struct C<environ>, shares it between all
 threads in the process, which means it is not thread-local. So if you
@@ -109,6 +113,18 @@ module thread-safe is useless.
 If you need to modify the C level of C<%ENV> for all threads to see,
 do that before threads are started. (e.g. for mod_perl 2.0, at the
 server startup).
+
+=item * Windows Compatibility Issues
+
+On Windows, the C environment does not match the Perl environment exactly.
+Specifically, some C environment variable names may appear in lower-case in the
+C environment, but will be upper-case in the Perl environment.  Also, some Perl
+C<%ENV> variables may not even be present in the C environment at all.  This
+has to do with the way the environment works in Windows and has nothing to do
+with L<Env::C> directly.  Nevertheless, you should be aware of this if you are
+running under Windows.
+
+=back
 
 =head1 HISTORY
 
