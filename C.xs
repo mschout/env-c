@@ -85,7 +85,7 @@ inline int __setenv(const char *key, const char *val, int override) {
         if (buff != NULL) {
             sprintf(buff, "%s=%s", key, val);
             RETVAL = putenv(buff);
-            if (old_env == NULL) {
+            if (old_env != NULL) {
                 free(old_env);
             }
         }
